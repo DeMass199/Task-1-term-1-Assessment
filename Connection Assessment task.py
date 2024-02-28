@@ -15,19 +15,19 @@ def setup_word_categories():
     
     Time_period_category = {
     "linking_words": "Time periods",
-    "words": {"century", "decade", "millennium", "year"}
+    "words": {"Century", "Decade", "Millennium", "Year"}
     }
     lazy_category = {
     "linking_words": "lazy",
-    "words": {"sloth", "couch", "sleepy", "indolent"}
+    "words": {"Sloth", "Couch", "Sleepy", "Indolent"}
     }
     smelly_category = {
     "linking_words": "smelly",
-    "words": {"rank", "BO", "skunks", "barbage"}
+    "words": {"Rank", "BO", "Skunks", "Garbage"}
     }
     body_part_category = {
     "linking_words": "body_parts",
-    "words": {"legs", "arms", "fingers", "feet"}
+    "words": {"Legs", "Arms", "Fingers", "Feet"}
     }
     NBA_Greats_category = {
     "linking_words": "NBA_Greats",
@@ -35,19 +35,19 @@ def setup_word_categories():
     }
     news_paper_category = {
     "linking_words": "parts of a news paper",
-    "words": {"sports", "opinion", "entertainment", ""}
+    "words": {"sports", "Opinion", "Entertainment", "Headline"}
     }
     iconic_videogame_characters_categories = {
     "linking_words": "Iconic video game characters",
-    "words": {"COD black ops", "minecraft", "Halo", "GoldenEye 007"}
+    "words": {"COD black ops", "Minecraft", "Halo", "GoldenEye 007"}
     }
     deep_fried_food_categories = {
-    "linking_words": "deep fried foods",
-    "words": {"", "", "", ""}
+    "linking_words": "can / are deep fried",
+    "words": {"Arancini", "Egg roll", "Chicken", "Tofu"}
     }
     word_for_walking_heavily = {
-    "linking_words": "deep fried foods",
-    "words": {"", "", "", ""}
+    "linking_words": "words for walking heavily",
+    "words": {"Stomping", "Rrudged", "Hiking", "Trek"}
     }
 
     word_categories.append(Time_period_category)
@@ -58,6 +58,7 @@ def setup_word_categories():
     word_categories.append(news_paper_category)
     word_categories.append(iconic_videogame_characters_categories)
     word_categories.append(deep_fried_food_categories)
+    word_categories.append(word_for_walking_heavily)
     "figure out how to used shuffle (random.shuffles)"
 
     return word_categories
@@ -104,4 +105,3 @@ def main():
     
 
 main()
-# Test
