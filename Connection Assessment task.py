@@ -1,3 +1,5 @@
+import random
+
 def print_words_from_categories(word_categories):
     """
     Loop through each category to print its words.
@@ -59,8 +61,16 @@ def setup_word_categories():
     word_categories.append(iconic_videogame_characters_categories)
     word_categories.append(deep_fried_food_categories)
     word_categories.append(word_for_walking_heavily)
-    "figure out how to used shuffle (random.shuffles)"
 
+    # Randomly select 4 categories
+    selected_categories = random.sample(word_categories, 4)
+    # Print the randomly selected categories
+    for category in selected_categories:
+       print(f"Words: {category['words']}")
+
+    "randomise the individual words for the array"
+    "use the number to grab the categories in the array"
+    "make sure it doesn't grab the same numbers twice"
     return word_categories
 
 def create_word_grid():
@@ -78,14 +88,14 @@ def create_word_grid():
 
     return word_grid
 
-def populate_grid(word_categories, grid):
+def populate_grid(word_categories, grid, selected_categories): 
     # do some things
     # choose 4 categories and fill the goddam grid!!!!
     populated_grid = "Test"
     return populated_grid
 
 
-def full_word_grid():
+def fill_word_grid():
     """
     Placeholder function to later populate the grid with words from categories.
     This could include random selection and placement of words.
