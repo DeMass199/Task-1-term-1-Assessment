@@ -1,6 +1,5 @@
 import random
 
-
 def get_user_guesses():
     # get 4 inputs 
     # these inputs must be words
@@ -11,27 +10,22 @@ def get_user_guesses():
         guess = input() 
         guesses.append(guess)
 
-    print(guesses)
-
 
     return guesses
 
-def check_guess(guess, category):
-   for word in category:
-    if word in guess:
-        return True
-    return False
-   
-guesses = get_user_guesses()
-word_categories = []
+def check_guess(guesses, categories):
+   print(guesses)
+   print(categories)
+   for word in guesses:
+       for category in categories:
+           for item in category:
+               if word == item:
+                   print("Found a word")
+                   
+    # how do i compare the contents of two lists and check if they contain all of the same
+    # items, doesnt matter the order
 
-if check_guess(guesses, word_categories):
-    print("Your guess contains one of the keywords")
-else:
-    print("Your guess does not contain any keywords.")
-        # make this part do this things:
-        # print the words only
-        # compare them against the guess list/ categories
+
 
 
 def print_words_from_categories(word_categories):
@@ -163,28 +157,30 @@ def shuffle_words(grid):
             i = i + 1
         grid += [row]
         j+=1
-    print(grid)
+    # print(grid)
     return grid
 
-def play_game(populated_grid):
+def play_game(populated_grid, guesses):
     pass
 
 def main():
     # this is the order in which things occur
+    word_categories = []
     selected_categories = setup_word_categories() # go and grab the 4 categories to use in the game
-    grid = create_word_grid()
-    unsorted_grid = populate_grid(selected_categories, grid)
-    shuffled_grid = shuffle_words(unsorted_grid)
-    guesses = get_user_guesses()
-    check_guess(guesses, word_categories)
-
-
-    # print(grid)
-    # populated_grid = populate_grid(word_categories, grid)
+    grid = create_word_grid() # creates a grid
+    populated_grid = populate_grid(word_categories, grid) #populates the grid with the words from chosen categories
+    unsorted_grid = populate_grid(selected_categories, grid) 
+    shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid
+    print(shuffled_grid) 
     # play_game(populated_grid)
-    # grid = create_word_grid()
-    # for row in grid:
-    #     print(row)
-    main()
+    guesses = get_user_guesses()
+
+    # if check_guess(guesses, shuffled_grid):
+    #     print("Your guess contains one of the keywords")
+    # else:
+    #     print("Your guess does not contain any keywords.")
+            # compare them against the guess list/ categories
+    
+main()
 
 # compare the category in categories
