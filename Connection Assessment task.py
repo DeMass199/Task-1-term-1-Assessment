@@ -1,10 +1,5 @@
 import random
 
-def check_guess(guess, category ):
-    for category in categories:
-        print("it worked")
-        # print the words only
-        # compare them against the guess list
 
 def get_user_guesses():
     # get 4 inputs 
@@ -20,6 +15,24 @@ def get_user_guesses():
 
 
     return guesses
+
+def check_guess(guess, category):
+   for word in category:
+    if word in guess:
+        return True
+    return False
+   
+guesses = get_user_guesses()
+word_categories = []
+
+if check_guess(guesses, word_categories):
+    print("Your guess contains one of the keywords")
+else:
+    print("Your guess does not contain any keywords.")
+        # make this part do this things:
+        # print the words only
+        # compare them against the guess list/ categories
+
 
 def print_words_from_categories(word_categories):
     """
@@ -123,7 +136,6 @@ def populate_grid(selected_categories, grid):
             col += 1
         row = row + 1
         
-    
     return grid
     
 def shuffle_words(grid):
@@ -151,6 +163,7 @@ def shuffle_words(grid):
             i = i + 1
         grid += [row]
         j+=1
+    print(grid)
     return grid
 
 def play_game(populated_grid):
@@ -162,8 +175,8 @@ def main():
     grid = create_word_grid()
     unsorted_grid = populate_grid(selected_categories, grid)
     shuffled_grid = shuffle_words(unsorted_grid)
-    get_user_guesses()
-    check_guess(guess, category)
+    guesses = get_user_guesses()
+    check_guess(guesses, word_categories)
 
 
     # print(grid)
@@ -172,8 +185,6 @@ def main():
     # grid = create_word_grid()
     # for row in grid:
     #     print(row)
-    
-
-main()
+    main()
 
 # compare the category in categories
