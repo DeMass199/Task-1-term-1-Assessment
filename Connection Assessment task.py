@@ -10,23 +10,40 @@ def get_user_guesses():
         guess = input() 
         guesses.append(guess)
 
-
     return guesses
 
 def check_guess(guesses, categories):
-   print(guesses)
-   print(categories)
-   for word in guesses:
-       for category in categories:
-           for item in category:
-               if word == item:
-                   print("Found a word")
+    # Need to change "categories" to the words in the "wordlist" / dictionary words
+    for x in guesses:
+        print(x, end = " ")
+        print()
+    for i in range(len(guesses)):
+        if guesses[i] == categories[i]:
+            print("????",end ="")
+        elif guesses[i] in categories:
+            print("????",end="")
+        else:
+            print("",end="")
+             
+      #if word present return true else return false
+    if guesses == categories:
+        return 1
+    else:
+        return 0
+
+#    print(guesses)
+#    print(selected_categories)
+#    for word in guesses:
+#        for category in selected_categories:
+#            for item in category:
+#                if word == item:
+#                    print("Found a word")
                    
     # how do i compare the contents of two lists and check if they contain all of the same
     # items, doesnt matter the order
-
-
-
+    # for i in range (0, len(list)):
+    # if list[i][0]==searchstring:
+    # list[i][4]=do_a_bunch_of_stuff
 
 def print_words_from_categories(word_categories):
     """
@@ -43,56 +60,63 @@ def setup_word_categories():
     """
     word_categories = []
     
-    Time_period_category = {
+    category1 = {
     "linking_word": "Time periods",
     "words": ["Century", "Decade", "Millennium", "Year"]
     }
-    lazy_category = {
+    category2 = {
     "linking_word": "lazy",
     "words": ["Sloth", "Couch", "Sleepy", "Indolent"]
     }
-    smelly_category = {
+    category3 = {
     "linking_word": "smelly",
     "words": ["Rank", "BO", "Skunks", "Garbage"]
     }
-    body_part_category = {
+    category4 = {
     "linking_word": "body_parts",
     "words": ["Legs", "Arms", "Fingers", "Feet"]
     }
-    NBA_Greats_category = {
+    category5 = {
     "linking_word": "NBA_Greats",
     "words": ["Bird", "Curry", "James", "Jordan"]
     }
-    news_paper_category = {
+    category6 = {
     "linking_word": "parts of a news paper",
     "words": ["sports", "Opinion", "Entertainment", "Headline"]
     }
-    iconic_videogame_characters_categories = {
+    category7 = {
     "linking_word": "Iconic video game characters",
     "words": ["COD black ops", "Minecraft", "Halo", "GoldenEye 007"]
     }
-    deep_fried_food_categories = {
+    category8 = {
     "linking_word": "can / are deep fried",
     "words": ["Arancini", "Egg roll", "Chicken", "Tofu"]
     }
-    word_for_walking_heavily = {
+    category9 = {
     "linking_word": "words for walking heavily",
     "words": ["Stomping", "Rrudged", "Hiking", "Trek"]
     }
     
 
-    word_categories.append(Time_period_category)
-    word_categories.append(lazy_category)
-    word_categories.append(smelly_category)
-    word_categories.append(body_part_category)
-    word_categories.append(NBA_Greats_category)
-    word_categories.append(news_paper_category)
-    word_categories.append(iconic_videogame_characters_categories)
-    word_categories.append(deep_fried_food_categories)
-    word_categories.append(word_for_walking_heavily)
+    word_categories.append(category1)
+    word_categories.append(category2)
+    word_categories.append(category3)
+    word_categories.append(category4)
+    word_categories.append(category5)
+    word_categories.append(category6)
+    word_categories.append(category7)
+    word_categories.append(category8)
+    word_categories.append(category9)
 
     # Randomly select 4 categories
     selected_categories = random.sample(word_categories, 4)
+    # category_1, category_2, category_3, category_4 = selected_catgeories
+    # 4_categories = []
+    # for category in selected_categories:
+    #     for word in category['words']:
+    #         4_categories.append(word)
+    # return 4_categories, [category_1, category_2, category_3, category_4], category_1, category_2, category_3, category_4
+
     # Print the randomly selected categories
     # for category in selected_categories:
     #    print(f"Words: {category['words']}")
@@ -160,7 +184,7 @@ def shuffle_words(grid):
     # print(grid)
     return grid
 
-def play_game(populated_grid, guesses):
+def play_game():
     pass
 
 def main():
@@ -172,8 +196,9 @@ def main():
     unsorted_grid = populate_grid(selected_categories, grid) 
     shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid
     print(shuffled_grid) 
-    # play_game(populated_grid)
+    # play_game()
     guesses = get_user_guesses()
+    check_guess(guesses, word_categories)
 
     # if check_guess(guesses, shuffled_grid):
     #     print("Your guess contains one of the keywords")
@@ -184,3 +209,6 @@ def main():
 main()
 
 # compare the category in categories
+# i need to make the dictionary / word catgories easily accessible to the rest of my code through defining the four categories chosen in "selected_categories" 
+#an example: selected_categories(category_1, category_2, category_3, category_4) 
+# this will make it easier to cross check the answer in "check_guess"
