@@ -27,13 +27,25 @@ def check_guess(guesses,word_categories):
     
     # look at each list inside of each dictionary
     guesses = set(guesses)
+    category_solved = False
+
     for category in word_categories:
         if guesses == set(category["words"]):
-            print("You have gotten all the words for this category:  ")
-            print(category["linking_word"])
-        # else: 
-        #     print("your are so close try again")
+            category_solved = True
+        
+    if category_solved == True:
+        print("You have gotten all the words for this category:  ")
+        print(category["linking_word"])
+        return True, category
+    else:
+        print("Incorrect!")
+        return False, None
     
+
+
+
+                        # need to make this check for, if three of the four words in the same catgory are correct
+            # Then make another else: that says if you the user has pick only 1 or 2 of the words than they will get a message that say try again
 
     # for category in word_categories:
     #    if set(guesses) == set(word_categories["words"]):
@@ -198,6 +210,8 @@ def main():
     print(shuffled_grid) 
     # play_game()
     guesses = get_user_guesses()
-    check_guess(guesses, selected_categories)
+    guess_result, category_guessed = check_guess(guesses, selected_categories)
     
 main()
+
+# Need to create a lives function the ticks down if they get one of the word wrong
