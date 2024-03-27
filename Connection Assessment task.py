@@ -1,9 +1,34 @@
 import random
 
+# def game_over():
+#     pass
+
+# def initialize_lives(num_lives):
+#     lives = 4
+#     num_lives = lives
+#     return num_lives
+
+# def decrease_lives(num_lives):
+#     if check_guess == False:
+#         if num_lives > 0:
+#             num_lives -= 1
+#         print("Oops! You got something wrong. Lives remaining:", num_lives)
+#     else:
+#         print("Game over! No lives remaining.")
+#     return num_lives
+
+# # Example usage:
+# lives = initialize_lives(4)  # Initialize with 4 lives
+# print("Starting lives:", lives)
+
+# # Somewhere in your code, when something goes wrong:
+# lives = decrease_lives(lives)  # Decrease lives when something goes wrong
+
 def get_user_guesses():
     # get 4 inputs 
     # these inputs must be words
-    print("Please type in your guesses")
+    print("Beware you have have to type the word exactly the way it says")
+    print("Now please type in your guesses")
     
     guesses = []
     for i in range(0,4):
@@ -13,24 +38,13 @@ def get_user_guesses():
     return guesses
 
 def check_guess(guesses,word_categories):
-    # Need to change "categories" to the words in the "wordlist" / dictionary words
-    # print(guesses)
-    # print(word_categories)
-#    for word in guesses:
-#        for category in word_categories:
-#            for item in category['words']:
-#                 if word == item:
-#                     print("Found a word")
-#                   # The code will print "found a word" 4 time 
-#                    # now it needs to check if the words are from the same category
-#                    # needs to say if the guesses are from the same category and greater than 3 three say there is 
-    
-    # look at each list inside of each dictionary
-    guesses = set(guesses)
+    # now it needs to check if the words are from the same category
+    # needs to say if the guesses are from the same category and greater than 3 three say there is 
+    guesses = set(guesses) 
     category_solved = False
 
     for category in word_categories:
-        if guesses == set(category["words"]):
+        if guesses == set(category["words"]): # look at each list of words inside of each dictionary
             category_solved = True
         
     if category_solved == True:
@@ -40,25 +54,8 @@ def check_guess(guesses,word_categories):
     else:
         print("Incorrect!")
         return False, None
-    
-
-
-
-                        # need to make this check for, if three of the four words in the same catgory are correct
-            # Then make another else: that says if you the user has pick only 1 or 2 of the words than they will get a message that say try again
-
-    # for category in word_categories:
-    #    if set(guesses) == set(word_categories["words"]):
-    #        print("Found a set")
-           
-        # compare guesses [,,,,] against the list inside of the dictionary       
-                  
-
-    # how do i compare the contents of two lists and check if they contain all of the same
-    # items, doesnt matter the order
-    # for i in range (0, len(list)):
-    # if list[i][0]==searchstring:
-    # list[i][4]=do_a_bunch_of_stuff
+# need to make this check for, if three of the four words in the same catgory are correct
+# Then make another else: that says if you the user has pick only 1 or 2 of the words than they will get a message that say try again           
 
 def print_words_from_categories(word_categories):
     """
@@ -153,6 +150,13 @@ def create_empty_grid():
         word_grid.append(row)
     return word_grid
 
+def make_grid_look_nice(populated_grid):
+    for row in populated_grid:
+        print("|", end="  ")
+        for cell in row:
+            print(cell.center(12), end="  |  ")
+        print()
+
 def populate_grid(selected_categories, grid): 
     
     # rather than just print off empty grid, use the words in the dictionaries inside selected_categories
@@ -199,19 +203,49 @@ def shuffle_words(grid):
 def play_game():
     pass
 
+def update_categories():
+    # take the original 4 categories defined at the beginning of the game
+    # take the guesssed category that was rigght
+    # remove the guessed category from the lsit of 4 categories
+    # rebuild the grid and return
+    pass
+
+
 def main():
-    # this is the order in which things occur
+    # This is the order in which things occur
+    # need to loop the main so that the user can play to game more than once without haveing to relaunch the code
+
+
     word_categories = []
     selected_categories = setup_word_categories() # go and grab the 4 categories to use in the game
     grid = create_empty_grid() # creates a grid
     populated_grid = populate_grid(word_categories, grid) #populates the grid with the words from chosen categories
     unsorted_grid = populate_grid(selected_categories, grid) 
-    shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid
+    shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid 
+    # grid_2 = make_grid_look_nice(shuffled_grid)
+    # grid_2 = shuffled_grid
     print(shuffled_grid) 
-    # play_game()
-    guesses = get_user_guesses()
-    guess_result, category_guessed = check_guess(guesses, selected_categories)
-    
+
+    game_won = False
+    guessed_categories = 0
+    lives = 4
+    while lives > 0 and game_won == False:
+        print(f"You have {lives} guesses remaining")
+        guesses = get_user_guesses()
+        guess_result, category_guessed = check_guess(guesses, selected_categories)
+        print(shuffled_grid)
+
+
+        if guess_result == False:
+            lives = lives - 1
+        else:
+            guessed_categories += 1
+            print(f"You guessed correctly. The category is {category_guessed}")
+        if guessed_categories == 4:
+            game_won = True
+            print("You win the game.")
+
+
 main()
 
 # Need to create a lives function the ticks down if they get one of the word wrong
