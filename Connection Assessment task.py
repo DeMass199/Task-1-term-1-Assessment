@@ -1,29 +1,5 @@
 import random
 
-# def game_over():
-#     pass
-
-# def initialize_lives(num_lives):
-#     lives = 4
-#     num_lives = lives
-#     return num_lives
-
-# def decrease_lives(num_lives):
-#     if check_guess == False:
-#         if num_lives > 0:
-#             num_lives -= 1
-#         print("Oops! You got something wrong. Lives remaining:", num_lives)
-#     else:
-#         print("Game over! No lives remaining.")
-#     return num_lives
-
-# # Example usage:
-# lives = initialize_lives(4)  # Initialize with 4 lives
-# print("Starting lives:", lives)
-
-# # Somewhere in your code, when something goes wrong:
-# lives = decrease_lives(lives)  # Decrease lives when something goes wrong
-
 def get_user_guesses():
     # get 4 inputs 
     # these inputs must be words
@@ -194,12 +170,14 @@ def shuffle_words(grid):
 def play_game():
     pass
 
-def update_categories():
+def update_categories(selected_categories, guessed_categories):
+    for category in guessed_categories:
+        selected_categories.remove(category)
+        selected_categories.insert(0, category)
     # take the original 4 categories defined at the beginning of the game
     # take the guesssed category that was right
     # remove the guessed category from the lsit of 4 categories
     # rebuild the grid and return
-    pass
 
 def main():
     # This is the order in which things occur
@@ -210,11 +188,12 @@ def main():
     populated_grid = populate_grid(word_categories, grid) #populates the grid with the words from chosen categories
     unsorted_grid = populate_grid(selected_categories, grid) 
     shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid 
-    make_grid_look_nice(shuffled_grid) 
+    make_grid_look_nice(shuffled_grid)
 
     game_won = False
     guessed_categories = 0
     lives = 4
+
     while lives > 0 and game_won == False:
         print(f"You have {lives} guesses remaining")
         guesses = get_user_guesses()
@@ -224,10 +203,12 @@ def main():
         if guess_result == False:
             lives -= 1
         else:
-            guessed_categories += 1
+            guessed_categories
             print(f"You guessed correctly. The category is {category_guessed['linking_word']}")
+            update_categories(selected_categories, guessed_categories)
 
-        if guessed_categories == 4:
+
+        if len(guessed_categories) == 4:
             game_won = True
             print("You win the game.")
 
