@@ -43,7 +43,6 @@ def check_guess(guesses,word_categories):
         print("Incorrect!")
         return False, None      
 # need to make this check for, if three of the four words in the same catgory are correct
-# Then make another else: that says if you the user has pick only 1 or 2 of the words than they will get a message that say try again
 def print_words_from_categories(word_categories):
     """ 
     Loop through each category to print its words. 
@@ -178,7 +177,6 @@ def shuffle_words(grid):
     # print(grid)
     return grid
 
-
 def update_categories(selected_categories, guessed_category):
     if category in guessed_category:
         for category in selected_categories:
@@ -194,6 +192,29 @@ def update_categories(selected_categories, guessed_category):
     # take the guesssed category that was right
     # remove the guessed category from the lsit of 4 categories
     # rebuild the grid and return
+
+def repopulate_grid(guessed_categories, unguessed_categories): 
+    Grid = create_empty_grid()
+    shuffled_words = []
+    
+    # Gather words from guessed categories
+    for category in guessed_categories:
+        shuffled_words.extend(category['words'])
+    
+    # Gather words from unguessed categories
+    for category in unguessed_categories:
+        shuffled_words.extend(category['words'])
+    
+    # Shuffle the words
+    random.shuffle(shuffled_words)
+    
+    # Populate the grid with shuffled words
+    for row in range(len(Grid)):
+        for col in range(len(Grid[row])):
+            Grid[row][col] = shuffled_words[row * len(Grid[row]) + col]
+    
+    return Grid
+
 
 def main():
     # This is the order in which things occur
@@ -220,13 +241,16 @@ def main():
         guesses = get_user_guesses()
         guess_result, category_guessed = check_guess(guesses, selected_categories)
         make_grid_look_nice(shuffled_grid)
+        
 
         if guess_result == False:
             lives -= 1
         else:
             guessed_categories
             print(f"You guessed correctly. The category is {category_guessed['linking_word']}")
-            
+            unguessed_categories = [category for category in selected_categories if category != category_guessed]# Update the grid based on guessed and unguessed categories
+            grid = repopulate_grid([category_guessed], unguessed_categories)
+            make_grid_look_nice(grid)
 
 
         if guessed_categories == 4:
@@ -239,7 +263,7 @@ def main():
         print("You ran out of guesses. Game over.")
         play_again_prompt()
 main()
-# Make a restart game fucntion
+# Make a restart game function
 # Fix the update categories function
 # make sure that the user cannot use the same words he has already found
 
