@@ -100,7 +100,46 @@ def setup_word_categories():
     "linking_word": "Verbs for walking heavily",
     "words": ["Stomping", "Trudging", "Hiking", "Treking"]
     }
-    
+    category10 = {
+    "linking_word": "Greek Gods",
+    "words": ["Zeus", " Apollo", "Hermes", "Poseidon"]
+    }
+    category11 = {
+    "linking_word": "Nukes dropped",
+    "words": ["Little Boy", "Fat Man", "Tsar Bomba", "Gilda"]
+    }
+    category12 = {
+    "linking_word": "Breakfast food",
+    "words": ["Eggs", "Bacon", "Pancakes", "Toast"]
+    }
+    category13 = {
+    "linking_word": "Religions",
+    "words": ["Christianity", "Islam", "Hinduism", "Buddhism"]
+    }
+    category14 = {
+    "linking_word": "Poker actions",
+    "words": ["Bet", "Call", "Check", "Fold"]
+    }
+    category15 = {
+    "linking_word": "Skin types",
+    "words": ["Comnination", "Dry", "Normal", "Oily"]
+    }
+    category16 = {
+    "linking_word": "Types of Beans",
+    "words": ["Green", "Lima", "Pinto", "Black"]
+    }
+    category17 = {
+    "linking_word": "Water Activites",
+    "words": ["Dive", "Surf", "Swim", "Kayak"]
+    }
+    category18 = {
+    "linking_word": "Basic Colour",
+    "words": ["Red", "Green", "Yellow", "Blue"]
+    }
+    # category19 = {
+    # "linking_word": "topic",
+    # "words": ["", "", "", ""]
+    # }
     word_categories.append(category1)
     word_categories.append(category2)
     word_categories.append(category3)
@@ -110,6 +149,16 @@ def setup_word_categories():
     word_categories.append(category7)
     word_categories.append(category8)
     word_categories.append(category9)
+    word_categories.append(category10)
+    word_categories.append(category11)
+    word_categories.append(category12)
+    word_categories.append(category13)
+    word_categories.append(category14)
+    word_categories.append(category15)
+    word_categories.append(category16)
+    word_categories.append(category17)
+    word_categories.append(category18)
+
 
     # Randomly select 4 categories
     selected_categories = random.sample(word_categories, 4)
