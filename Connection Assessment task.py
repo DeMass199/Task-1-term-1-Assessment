@@ -11,20 +11,25 @@ def play_again_prompt():
         print("please type in")
         return False
     
-def get_user_guesses():
+def get_user_guesses(previous_guesses):
     # get 4 inputs 
     # these inputs must be words
-    print("Beware you have have to type the word exactly the way it says")
+    print("Beware you have to type the word exactly the way it says")
     print("Now please type in your guesses")
     
     guesses = []
     for i in range(0,4):
         try:
             guess = input("Guess {}: ".format(i+1))
+            # Check if the guess is already in the previous guesses
+            if guess in previous_guesses:
+                print("You've already guessed that word. Please enter a different one.")
+                continue
             guesses.append(guess)
+            previous_guesses.append(guess)
         except Exception as e:
-            print("invalid input: ", e)
-    return guesses
+            print("Invalid input: ", e)
+    return guesses, previous_guesses
 
 def check_guess(guesses,word_categories):
     # now it needs to check if the words are from the same category
@@ -177,68 +182,26 @@ def shuffle_words(grid):
     # print(grid)
     return grid
 
-def update_categories(selected_categories, guessed_category):
-    if category in guessed_category:
-        for category in selected_categories:
-            category.remove(guessed_category)
-            category.insert(0, guessed_category)
-    
-    # need to create an additional function that would rebuild the game grid from 
-    # two different sources, the categories that have been guessed correctly, and 
-    #then the categories that have not been guessed yet. I’ll leave it up to you
-    # to try work out how to do this.
-    
-    # take the original 4 categories defined at the beginning of the game
-    # take the guesssed category that was right
-    # remove the guessed category from the lsit of 4 categories
-    # rebuild the grid and return
-
-def repopulate_grid(guessed_categories, unguessed_categories): 
-    Grid = create_empty_grid()
-    shuffled_words = []
-    
-    # Gather words from guessed categories
-    for category in guessed_categories:
-        shuffled_words.extend(category['words'])
-    
-    # Gather words from unguessed categories
-    for category in unguessed_categories:
-        shuffled_words.extend(category['words'])
-    
-    # Shuffle the words
-    random.shuffle(shuffled_words)
-    
-    # Populate the grid with shuffled words
-    for row in range(len(Grid)):
-        for col in range(len(Grid[row])):
-            Grid[row][col] = shuffled_words[row * len(Grid[row]) + col]
-    
-    return Grid
-
 
 def main():
     # This is the order in which things occur
     # need to loop the main so that the user can play to game more than once without haveing to relaunch the code
     word_categories = []
     game_won = False
-    guessed_categories = 0
+    correctly_guessed_categories = 0
     lives = 4
-    correct_words = []
-    correct_words.append('hello')
     selected_categories = setup_word_categories() # go and grab the 4 categories to use in the game
     grid = create_empty_grid() # creates a grid
     populated_grid = populate_grid(word_categories, grid) #populates the grid with the words from chosen categories
     unsorted_grid = populate_grid(selected_categories, grid) 
     shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid 
     make_grid_look_nice(shuffled_grid)
-    game_won = False
-    guessed_categories = 0
-    lives = 4
-    correct_words = []
+
+    previous_guesses = []
 
     while lives > 0 and game_won == False:
-        print(f"You have {lives} guesses remaining")
-        guesses = get_user_guesses()
+        print(f"You have {lives} Lives remaining")
+        guesses, previous_guesses = get_user_guesses(previous_guesses)
         guess_result, category_guessed = check_guess(guesses, selected_categories)
         make_grid_look_nice(shuffled_grid)
         
@@ -246,24 +209,21 @@ def main():
         if guess_result == False:
             lives -= 1
         else:
-            guessed_categories
+            correctly_guessed_categories += 1
             print(f"You guessed correctly. The category is {category_guessed['linking_word']}")
-            unguessed_categories = [category for category in selected_categories if category != category_guessed]# Update the grid based on guessed and unguessed categories
-            grid = repopulate_grid([category_guessed], unguessed_categories)
             make_grid_look_nice(grid)
 
 
-        if guessed_categories == 4:
+        if correctly_guessed_categories == 4:
             game_won = True
             print("You win the game.")
             play_again_prompt()
 
 
     if lives == 0:
-        print("You ran out of guesses. Game over.")
+        print("You ran out of Lives. Game over.")
         play_again_prompt()
 main()
-# Make a restart game function
 # Fix the update categories function
 # make sure that the user cannot use the same words he has already found
 
