@@ -29,6 +29,7 @@ def get_user_guesses(previous_guesses):
             previous_guesses.append(guess)
         except Exception as e:
             print("Invalid input: ", e)
+
     return guesses, previous_guesses
 
 def check_guess(guesses,word_categories):
@@ -182,7 +183,6 @@ def shuffle_words(grid):
     # print(grid)
     return grid
 
-
 def main():
     # This is the order in which things occur
     # need to loop the main so that the user can play to game more than once without haveing to relaunch the code
@@ -210,8 +210,9 @@ def main():
             lives -= 1
         else:
             correctly_guessed_categories += 1
-            print(f"You guessed correctly. The category is {category_guessed['linking_word']}")
-            make_grid_look_nice(grid)
+            category_guessed = check_guess(guesses, selected_categories)
+            print(f"You guessed correctly. The category is {category_guessed[1]['linking_word']}")
+            
 
 
         if correctly_guessed_categories == 4:
