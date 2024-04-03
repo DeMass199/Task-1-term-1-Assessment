@@ -14,9 +14,14 @@ def play_again_prompt():
 def get_user_guesses(previous_guesses):
     # get 4 inputs 
     # these inputs must be words
-    print("Beware you have to type the word exactly the way it says")
+    print("welcome to Connections the rules are very simple:")
+    print("There are 16 words and 4 categroies you have to match 4 words to each category")
+    print("The words are displayed in the grid above")
+    print("Beware you have to type the word exactly the way it is written")
+    print("Good Luck and welcome to connections")
     print("Now please type in your guesses")
     
+
     guesses = []
 
     # what you really want to do, is compares guesses to any previous attempts that are correct
@@ -261,24 +266,25 @@ def main():
         make_grid_look_nice(shuffled_grid)
         
         if guess_result == False and category_guessed == "Already Guessed":
-            print("You have already guessed that category, try again...")
+            print("You have already guessed those words, try again to find another set of words...")
         elif guess_result == False:
             lives -= 1
         else:
             correctly_guessed_categories += 1
             category_guessed = check_guess(guesses, selected_categories,correctly_guessed_categories_words)
             correctly_guessed_categories_words.append(set(category_guessed[1]["words"]))
-            print(f"You guessed correctly. The category you have found is {category_guessed[1]["linking_word"]}")
+            print(f"Your guess is correctly you have found The words related to the: {category_guessed[1]["linking_word"]} category")
 
 
         if correctly_guessed_categories == 4:
             game_won = True
-            print("You win the game.")
+            print("Congradulations you have won the game.")
             play_again_prompt()
 
 
     if lives == 0:
-        print("You ran out of Lives. Game over.")
+        print("Unfortunatly you have ran out of Lives")
+        print("GAME OVER")
         play_again_prompt()
 main()
 # Fix the update categories function
