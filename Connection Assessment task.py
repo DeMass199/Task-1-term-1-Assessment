@@ -267,7 +267,6 @@ def main():
         else:
             correctly_guessed_categories += 1
             category_guessed = check_guess(guesses, selected_categories,correctly_guessed_categories_words)
-            print(category_guessed)
             correctly_guessed_categories_words.append(set(category_guessed[1]["words"]))
             print(f"You guessed correctly. The category you have found is {category_guessed[1]["linking_word"]}")
 
