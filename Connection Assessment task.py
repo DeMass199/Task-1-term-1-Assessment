@@ -14,8 +14,8 @@ def play_again_prompt():
 def get_user_guesses(previous_guesses):
     # get 4 inputs 
     # these inputs must be words
-    print("welcome to Connections the rules are very simple:")
-    print("There are 16 words and 4 categroies you have to match 4 words to each category")
+    print("welcome to Connections, the rules are simple:")
+    print("There are 16 words and 4 categroies you have to match 4 words with there category")
     print("The words are displayed in the grid above")
     print("Beware you have to type the word exactly the way it is written")
     print("Good Luck and welcome to connections")
@@ -262,8 +262,8 @@ def main():
     while lives > 0 and game_won == False:
         print(f"You have {lives} Lives remaining")
         guesses, previous_guesses = get_user_guesses(previous_guesses)
-        guess_result, category_guessed = check_guess(guesses, selected_categories, correctly_guessed_categories_words)
-        make_grid_look_nice(shuffled_grid)
+        guess_result, category_guessed = check_guess(guesses, selected_categories, correctly_guessed_categories_words) # allows the user to type words they have already typed without losing a live
+        make_grid_look_nice(shuffled_grid) # print a Better looking Grid
         
         if guess_result == False and category_guessed == "Already Guessed":
             print("You have already guessed those words, try again to find another set of words...")
@@ -271,8 +271,8 @@ def main():
             lives -= 1
         else:
             correctly_guessed_categories += 1
-            category_guessed = check_guess(guesses, selected_categories,correctly_guessed_categories_words)
-            correctly_guessed_categories_words.append(set(category_guessed[1]["words"]))
+            category_guessed = check_guess(guesses, selected_categories,correctly_guessed_categories_words) # This next 3 lines allow for the user to see exactly what category they got correct by looking 
+            correctly_guessed_categories_words.append(set(category_guessed[1]["words"]))                    # at the words a cross checking the guess with the selected_categories to get correctly_guessed_categories_words
             print(f"Your guess is correctly you have found The words related to the: {category_guessed[1]["linking_word"]} category")
 
 
