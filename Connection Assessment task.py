@@ -18,37 +18,40 @@ def get_user_guesses(previous_guesses):
     print("Now please type in your guesses")
     
     guesses = []
+
+    # what you really want to do, is compares guesses to any previous attempts that are correct
     for i in range(0,4):
         try:
             guess = input("Guess {}: ".format(i+1))
             # Check if the guess is already in the previous guesses
-            if guess in previous_guesses:
-                print("You've already guessed that word. Please enter a different one.")
-                continue
             guesses.append(guess)
-            previous_guesses.append(guess)
         except Exception as e:
             print("Invalid input: ", e)
 
     return guesses, previous_guesses
 
-def check_guess(guesses,word_categories):
+def check_guess(guesses,selected_categories,correctly_guessed_categories_words):
+
+    # you could perhaps check if they have ALREADY guessed tthat categgory before 
+    for category in correctly_guessed_categories_words:
+        if category == set(guesses):
+            return False, "Already Guessed"
+
     # now it needs to check if the words are from the same category
-    # needs to say if the guesses are from the same category and greater than 3 three say there is 
     guesses = set(guesses) 
     category_solved = False
 
-    for category in word_categories:
+    for category in selected_categories:
         if guesses == set(category["words"]): # look at each list of words inside of each dictionary
             category_solved = True
-        
+            break
+
     if category_solved == True:
-        print("You have gotten all the words for this category:  ")
         return True, category
     else:
         print("Incorrect!")
         return False, None      
-# need to make this check for, if three of the four words in the same catgory are correct
+
 def print_words_from_categories(word_categories):
     """ 
     Loop through each category to print its words. 
@@ -100,42 +103,43 @@ def setup_word_categories():
     "linking_word": "Verbs for walking heavily",
     "words": ["Stomping", "Trudging", "Hiking", "Treking"]
     }
-    category10 = {
-    "linking_word": "Greek Gods",
-    "words": ["Zeus", " Apollo", "Hermes", "Poseidon"]
-    }
-    category11 = {
-    "linking_word": "Nukes dropped",
-    "words": ["Little Boy", "Fat Man", "Tsar Bomba", "Gilda"]
-    }
-    category12 = {
-    "linking_word": "Breakfast food",
-    "words": ["Eggs", "Bacon", "Pancakes", "Toast"]
-    }
-    category13 = {
-    "linking_word": "Religions",
-    "words": ["Christianity", "Islam", "Hinduism", "Buddhism"]
-    }
-    category14 = {
-    "linking_word": "Poker actions",
-    "words": ["Bet", "Call", "Check", "Fold"]
-    }
-    category15 = {
-    "linking_word": "Skin types",
-    "words": ["Comnination", "Dry", "Normal", "Oily"]
-    }
-    category16 = {
-    "linking_word": "Types of Beans",
-    "words": ["Green", "Lima", "Pinto", "Black"]
-    }
-    category17 = {
-    "linking_word": "Water Activites",
-    "words": ["Dive", "Surf", "Swim", "Kayak"]
-    }
-    category18 = {
-    "linking_word": "Basic Colour",
-    "words": ["Red", "Green", "Yellow", "Blue"]
-    }
+    # category10 = {
+    # "linking_word": "Greek Gods",
+    # "words": ["Zeus", " Apollo", "Hermes", "Poseidon"]
+    # }
+    # category11 = {
+    # "linking_word": "Nukes dropped",
+    # "words": ["Little Boy", "Fat Man", "Tsar Bomba", "Gilda"]
+    # }
+    # category12 = {
+    # "linking_word": "Breakfast food",
+    # "words": ["Eggs", "Bacon", "Pancakes", "Toast"]
+    # }
+    # category13 = {
+    # "linking_word": "Religions",
+    # "words": ["Christianity", "Islam", "Hinduism", "Buddhism"]
+    # }
+    # category14 = {
+    # "linking_word": "Poker actions",
+    # "words": ["Bet", "Call", "Check", "Fold"]
+    # }
+    # category15 = {
+    # "linking_word": "Skin types",
+    # "words": ["Combination", "Dry", "Normal", "Oily"]
+    # }
+    # category16 = {
+    # "linking_word": "Types of Beans",
+    # "words": ["Green", "Lima", "Pinto", "Black"]
+    # }
+    # category17 = {
+    # "linking_word": "Water Activites",
+    # "words": ["Dive", "Surf", "Swim", "Kayak"]
+    # }
+    # category18 = {
+    # "linking_word": "Basic Colour",
+    # "words": ["Red", "Green", "Yellow", "Blue"]
+    # }
+
     # category19 = {
     # "linking_word": "topic",
     # "words": ["", "", "", ""]
@@ -149,20 +153,19 @@ def setup_word_categories():
     word_categories.append(category7)
     word_categories.append(category8)
     word_categories.append(category9)
-    word_categories.append(category10)
-    word_categories.append(category11)
-    word_categories.append(category12)
-    word_categories.append(category13)
-    word_categories.append(category14)
-    word_categories.append(category15)
-    word_categories.append(category16)
-    word_categories.append(category17)
-    word_categories.append(category18)
+    # word_categories.append(category10)
+    # word_categories.append(category11)
+    # word_categories.append(category12)
+    # word_categories.append(category13)
+    # word_categories.append(category14)
+    # word_categories.append(category15)
+    # word_categories.append(category16)
+    # word_categories.append(category17)
+    # word_categories.append(category18)
 
 
     # Randomly select 4 categories
     selected_categories = random.sample(word_categories, 4)
-
     "randomise the individual words for the array"
     "use the number to grab the categories in the array"
     "make sure it doesn't grab the same numbers twice"
@@ -239,6 +242,8 @@ def main():
     game_won = False
     correctly_guessed_categories = 0
     lives = 4
+    previous_guesses = []
+    correctly_guessed_categories_words = []
     selected_categories = setup_word_categories() # go and grab the 4 categories to use in the game
     grid = create_empty_grid() # creates a grid
     populated_grid = populate_grid(word_categories, grid) #populates the grid with the words from chosen categories
@@ -246,22 +251,23 @@ def main():
     shuffled_grid = shuffle_words(unsorted_grid) # shuffles the words in the grid 
     make_grid_look_nice(shuffled_grid)
 
-    previous_guesses = []
 
     while lives > 0 and game_won == False:
         print(f"You have {lives} Lives remaining")
         guesses, previous_guesses = get_user_guesses(previous_guesses)
-        guess_result, category_guessed = check_guess(guesses, selected_categories)
+        guess_result, category_guessed = check_guess(guesses, selected_categories, correctly_guessed_categories_words)
         make_grid_look_nice(shuffled_grid)
         
-
-        if guess_result == False:
+        if guess_result == False and category_guessed == "Already Guessed":
+            print("You have already guessed that category, try again...")
+        elif guess_result == False:
             lives -= 1
         else:
             correctly_guessed_categories += 1
-            category_guessed = check_guess(guesses, selected_categories)
-            print(f"You guessed correctly. The category is {category_guessed[1]['linking_word']}")
-            
+            category_guessed = check_guess(guesses, selected_categories,correctly_guessed_categories_words)
+            print(category_guessed)
+            correctly_guessed_categories_words.append(set(category_guessed[1]["words"]))
+            print(f"You guessed correctly. The category you have found is {category_guessed[1]["linking_word"]}")
 
 
         if correctly_guessed_categories == 4:
